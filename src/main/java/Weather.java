@@ -25,7 +25,9 @@ class Weather {
             Element tableWth = getPage().select("table[class=weather-table]").first();
             return tableWth.select("div[class=weather-table__wrapper]").text();
         } catch (IOException e) {
+
             return "Сервис временно недоступен";
+
         }
     }
 
