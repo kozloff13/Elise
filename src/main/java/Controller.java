@@ -126,8 +126,7 @@ class Controller {
                 ELUSIVE_ANSWERS[random.nextInt(ELUSIVE_ANSWERS.length)] :
                 COMMON_PHRASES[random.nextInt(COMMON_PHRASES.length)];
         if (ai) {
-            String message =
-                    String.join(" ", msg.toLowerCase().split(" [ {,|.}?+]"));
+            String message = String.join(" ", msg.toLowerCase().split(" [ {,|.}?+]"));
             for (Map.Entry<String, String> o : PATTERNS_FOR_ANALYSIS.entrySet()) {
                 Pattern pattern = Pattern.compile(o.getKey());
                 if (pattern.matcher(message).find()) {
@@ -136,21 +135,9 @@ class Controller {
                     } else if (o.getValue().equals(FunctionWords.POEM.getFunctionWordsValue())) {
                         return poemString[random.nextInt(poemString.length)];
                     } else if (o.getValue().equals(FunctionWords.FIBO.getFunctionWordsValue())) {
-
-                        String numberFromMessage;   //число взятое из строки введенного сообщения
-                        numberFromMessage = msg.replaceAll("\\D+", "");  //выделяем число
-                        int inNum = Integer.parseInt(numberFromMessage); //приводим число из строки к типу int
-
-                        return String.valueOf(math.fibo(inNum));
-
+                        return String.valueOf(math.fibo(getInNum(msg)));
                     } else if (o.getValue().equals(FunctionWords.FACTORIAL.getFunctionWordsValue())) {
-
-                        String numberFromMessage;                                          //скоро
-                        numberFromMessage = msg.replaceAll("\\D+", "");   //это
-                        int inNum = Integer.parseInt(numberFromMessage);                   //переделаю
-
-                        return String.valueOf(math.factorial(inNum));
-
+                        return String.valueOf(math.factorial(getInNum(msg)));
                     } else if (o.getValue().equals(FunctionWords.WEATHER.getFunctionWordsValue())) {
                         return wth.weatherToday();
                     } else return ANSWERS_BY_PATTERNS.get(o.getValue());
@@ -158,5 +145,11 @@ class Controller {
             }
         }
         return say;
+    }
+
+    private int getInNum(String msg) {
+        String numberFromMessage;
+        numberFromMessage = msg.replaceAll("\\D+", "");
+        return Integer.parseInt(numberFromMessage);
     }
 }
