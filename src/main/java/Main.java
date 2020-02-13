@@ -18,11 +18,11 @@ class Main extends JFrame implements ActionListener {
     private final int WINDOW_WIDTH = 650;
     private final int WINDOW_HEIGHT = 450;
 
-    private JTextArea dialogue;
-    private JCheckBox ai;
-    private JTextField message;
+    private JTextArea dialogueArea;
+    private JCheckBox isEvil;
+    private JTextField messageField;
 
-    private Controller sbot;
+    private Controller controller;
 
     public static void main(String[] args) {
         new Main();
@@ -35,23 +35,23 @@ class Main extends JFrame implements ActionListener {
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setLocationRelativeTo(null);
 
-        dialogue = new JTextArea();
-        dialogue.setLineWrap(true);
-        JScrollPane scrollbar = new JScrollPane(dialogue);
+        dialogueArea = new JTextArea();
+        dialogueArea.setLineWrap(true);
+        JScrollPane scrollbar = new JScrollPane(dialogueArea);
 
         JPanel bp = new JPanel();
         bp.setLayout(new BoxLayout(bp, BoxLayout.X_AXIS));
 
-        ai = new JCheckBox("Злой режим");
+        isEvil = new JCheckBox("Злой режим");
 
-        message = new JTextField();
-        message.addActionListener(this);
+        messageField = new JTextField();
+        messageField.addActionListener(this);
 
         JButton enter = new JButton("Enter");
         enter.addActionListener(this);
 
-        bp.add(ai);
-        bp.add(message);
+        bp.add(isEvil);
+        bp.add(messageField);
         bp.add(enter);
 
         add(BorderLayout.CENTER, scrollbar);
@@ -59,17 +59,17 @@ class Main extends JFrame implements ActionListener {
 
         setVisible(true);
 
-        sbot = new Controller();
+        controller = new Controller();
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if (message.getText().trim().length() > 0) {
-            dialogue.append(message.getText() + "\n");
-            dialogue.append(TITLE_OF_PROGRAM.substring(0, 8) +
-                    sbot.sayInReturn(message.getText(), ai.isSelected()) + "\n");
+        if (messageField.getText().trim().length() > 0) {
+            dialogueArea.append(messageField.getText() + "\n");
+            dialogueArea.append(TITLE_OF_PROGRAM.substring(0, 8) +
+                    controller.sayInReturn(messageField.getText(), isEvil.isSelected()) + "\n");
         }
-        message.setText("");
-        message.requestFocusInWindow();
+        messageField.setText("");
+        messageField.requestFocusInWindow();
     }
 }
